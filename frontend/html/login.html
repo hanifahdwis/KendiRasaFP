@@ -55,22 +55,7 @@
     <script src="../js/auth.js"></script>
     <script src="../js/login.js"></script>
     <script src="../js/api.js"></script>
-    <script>
-        const loginForm = document.getElementById('loginForm');
-
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const data = await API.login(username, password);
-
-            if (data.success) {
-                localStorage.setItem('token', data.data.token);
-                window.location.href = 'dashboard.html';
-            }
-        });
-    </script>
+    <script src="../js/login.js"></script>
 </body>
 
 </html>
