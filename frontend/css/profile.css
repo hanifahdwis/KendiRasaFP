@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F3EFE7;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- DASHBOARD LAYOUT --- */
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* --- SIDEBAR (FLOATING/MENGAMBANG) --- */
+.sidebar {
+    width: 100px;
+    background-color: #E6D2CA; /* Warna Pink Pastel */
+    
+    /* POSISI MENGAMBANG (Jarak dari atas, kiri, bawah) */
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    bottom: 25px;
+    
+    border-radius: 20px; /* Semua sudut membulat */
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0;
+    z-index: 10;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05); /* Sedikit bayangan agar pop-up */
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    margin-top: 20px;
+}
+
+.nav-item {
+    font-size: 2rem;
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-item:hover {
+    transform: scale(1.1);
+}
+
+.profile-icon-sidebar {
+    color: #FDFBF7;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.logout-btn {
+    margin-top: auto;
+    background: none;
+    border: none;
+    font-size: 2.2rem;
+    color: #000;
+    cursor: pointer;
+}
+
+/* --- KONTEN UTAMA (KANAN) --- */
+.main-content {
+    /* Margin kiri disesuaikan dengan lebar sidebar + jarak sidebar */
+    margin-left: 150px; 
+    padding: 40px 60px 40px 40px; /* Padding kanan lebih besar */
+    width: calc(100% - 150px);
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- HEADER PROFIL --- */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.profile-pic-wrapper {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #9ECBCB; /* Warna Biru Tosca pudar sesuai gambar */
+    padding: 0; /* Gambar memenuhi lingkaran */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.profile-pic-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-details h2 {
+    font-size: 2.8rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.edit-btn, .save-btn {
+    background-color: #D58677;
+    color: white;
+    padding: 8px 25px;
+    border-radius: 20px;
+    border: none;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.save-btn {
+    background-color: #F3EFE7;
+    border: 3px solid #EBCBC4;
+    color: #D58677;
+    display: none; /* Sembunyi default */
+}
+
+.edit-btn:hover { background-color: #c07566; }
+.save-btn:hover { background-color: #e0d4c8; }
+
+/* --- INPUT FIELDS (Full Width) --- */
+.info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%; /* FULL WIDTH sampai pinggir */
+}
+
+.info-card {
+    background-color: #F3EFE7;
+    border: 2px solid #EBCBC4;
+    padding: 10px 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Untuk posisi icon mata */
+    position: relative; 
+    justify-content: center;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 2px;
+}
+
+/* Styling Input agar terlihat seperti teks biasa saat disabled */
+.info-input {
+    background: transparent;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #000;
+    width: 100%;
+    padding: 5px 0;
+    outline: none;
+}
+
+/* Saat mode edit aktif (enabled) */
+.info-input:enabled {
+    border-bottom: 1px solid #D58677;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Icon Mata Password */
+.password-toggle {
+    position: absolute; /* Posisi mutlak terhadap info-card */
+    right: 20px;        /* Jarak 20px dari kanan */
+    top: 55%;           /* Turunkan sedikit biar sejajar dengan titik-titik password */
+    transform: translateY(-50%); /* Trik centering vertikal */
+    cursor: pointer;
+    color: #555;
+    font-size: 1.2rem;
+    display: none;      /* Default sembunyi */
+    z-index: 10;
+}

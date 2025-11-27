@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - KENDIRASA</title>
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="nav-item profile-icon-sidebar">
+                <i class="fa-regular fa-circle-user"></i>
+            </div>
+
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                <div class="nav-item">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                <div class="nav-item">
+                    <i class="fa-regular fa-face-smile"></i>
+                </div>
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+        </aside>
+
+        <main class="main-content">
+            <h1 class="page-title">PROFIL</h1>
+
+            <div class="profile-header">
+                <div class="profile-pic-wrapper">
+                    <img src="https://i.pinimg.com/736x/c9/78/38/c97838501e74de2d00742cc629082dc8.jpg" alt="Profile" id="profileImage">
+                </div>
+                
+                <div class="profile-details">
+                    <h2 id="displayName">Memuat...</h2>
+                    
+                    <button class="edit-btn" id="editBtn">
+                        <i class="fa-solid fa-pen"></i> edit profil
+                    </button>
+                    
+                    <button class="save-btn" id="saveBtn">
+                        <i class="fa-solid fa-check"></i> Simpan
+                    </button>
+                </div>
+            </div>
+
+            <form id="profileForm" class="info-section">
+                <div class="info-card">
+                    <label class="info-label">nama pengguna</label>
+                    <input type="text" class="info-input" id="usernameInput" disabled>
+                </div>
+
+                <div class="info-card">
+                    <label class="info-label">password</label>
+                    <input type="password" class="info-input" id="passwordInput" value="********" disabled>
+                    <i class="fa-regular fa-eye password-toggle" id="togglePassword"></i>
+                </div>
+
+                <div class="info-card">
+                    <label class="info-label">anggota sejak</label>
+                    <input type="text" class="info-input" id="joinedInput" disabled style="color: #555;">
+                </div>
+            </form>
+            
+            <div style="margin-top: 30px; text-align: right;">
+                <button id="deleteAccountBtn" style="color: #dc3545; background: none; border: none; cursor: pointer; font-family: 'Montserrat'; font-weight: 600;">
+                    <i class="fa-solid fa-trash"></i> Hapus Akun
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/profile.js"></script>
+
+</body>
+</html>
