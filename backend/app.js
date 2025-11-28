@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const journalRoutes = require('./routes/journalRoutes');
-const moodRoutes = require('./routes/moodRoutes'); 
-
 const app = express();
 
 // Middleware
@@ -14,7 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/journals', journalRoutes);
-app.use('/api/kendi-rasa', moodRoutes); // Route untuk butiran rasa
 
 // Health check route
 app.get('/', (req, res) => {

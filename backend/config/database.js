@@ -34,7 +34,6 @@ function createTables() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       color TEXT NOT NULL,
-      icon TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `, (err) => {
@@ -53,7 +52,7 @@ function createTables() {
             ['Frustasi', '#E66A2B']
           ];
           
-          const stmt = db.prepare('INSERT INTO moods (name, color, icon) VALUES (?, ?, ?)');
+          const stmt = db.prepare('INSERT INTO moods (name, color) VALUES (?, ?)');
           defaultMoods.forEach(mood => stmt.run(mood));
           stmt.finalize();
           console.log('Default moods inserted');
