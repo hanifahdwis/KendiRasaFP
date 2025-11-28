@@ -46,11 +46,11 @@ function createTables() {
       db.get('SELECT COUNT(*) as count FROM moods', (err, row) => {
         if (!err && row.count === 0) {
           const defaultMoods = [
-            ['Senang', '#FFD93D'],
-            ['Sedih', '#6C63FF'],
-            ['Marah', '#FF6B6B'],
-            ['Lelah', '#95A5A6'],
-            ['Frustasi', '#E17055']
+            ['Senang', '#F7D046'],
+            ['Sedih', '#2E5DAE'],
+            ['Marah', '#D5222A'],
+            ['Takut', '#A282C4'],
+            ['Frustasi', '#E66A2B']
           ];
           
           const stmt = db.prepare('INSERT INTO moods (name, color, icon) VALUES (?, ?, ?)');
