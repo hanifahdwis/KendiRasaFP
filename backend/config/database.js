@@ -28,6 +28,58 @@ function createTables() {
       console.log('Users table ready');
     }
   });
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS moods (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      color TEXT NOT NULL,
+      icon TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `, (err) => {
+    if (err) {
+      console.error('Error creating moods table:', err);
+    } else {
+      console.log('Moods table ready');
+      
+      db.get('SELECT COUNT(*) as count FROM moods', (err, row) => {
+        if (!err && row.count === 0) {
+          const defaultMoods = [
+            ['Senang', '#FFD93D'],
+            ['Sedih', '#6C63FF'],
+            ['Marah', '#FF6B6B'],
+            ['Lelah', '#95A5A6'],
+            ['Frustasi', '#E17055']
+          ];
+          
+          const stmt = db.prepare('INSERT INTO moods (name, color, icon) VALUES (?, ?, ?)');
+          defaultMoods.forEach(mood => stmt.run(mood));
+          stmt.finalize();
+          console.log('Default moods inserted');
+        }
+      });
+    }
+  });
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS journals (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      mood_id INTEGER NOT NULL,
+      content TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (mood_id) REFERENCES moods(id)
+    )
+  `, (err) => {
+    if (err) {
+      console.error('Error creating journals table:', err);
+    } else {
+      console.log('Journals table ready');
+    }
+  });
 }
 
 module.exports = db;
