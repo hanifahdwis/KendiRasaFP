@@ -194,54 +194,68 @@ exports.changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
 
+    // 1. Cek Input
     if (!currentPassword || !newPassword) {
       return res.status(400).json({ 
         success: false, 
-        message: 'Current and new password are required' 
+        message: 'Password lama dan baru harus diisi' 
       });
     }
 
-    UserModel.findById(req.userId, async (err, user) => {
-      if (err) {
-        return res.status(500).json({ 
-          success: false, 
-          message: 'Database error' 
-        });
+    // DEBUG: Cek apakah ID user kebaca?
+    console.log("--- DEBUG GANTI PASSWORD ---");
+    console.log("User ID dari Token:", req.userId);
+
+    UserModel.findByIdWithPassword(req.userId, async (err, user) => {
+      if (err) return res.status(500).json({ success: false, message: 'Database error cari user' });
+      
+      if (!user) {
+        console.log("User tidak ditemukan di database!");
+        return res.status(404).json({ success: false, message: 'User tidak ditemukan' });
       }
 
+      // 2. Cek Password Lama
       const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
-
       if (!isPasswordValid) {
         return res.status(401).json({ 
           success: false, 
-          message: 'Current password is incorrect' 
+          message: 'Password lama salah!' 
         });
       }
 
+      // 3. Hash Password Baru
       const hashedPassword = await bcrypt.hash(newPassword, 10);
+      console.log("Hash Password Baru:", hashedPassword);
 
+      // 4. Update ke Database
       UserModel.updatePassword(req.userId, hashedPassword, (err, result) => {
         if (err) {
-          return res.status(500).json({ 
+          console.error("Error SQL:", err);
+          return res.status(500).json({ success: false, message: 'Gagal update password' });
+        }
+
+      
+        console.log("Hasil perubahan SQLite:", result);
+        
+        if (result.changes === 0) {
+          // Kalau 0, berarti gagal update walau tidak error
+          return res.status(400).json({ 
             success: false, 
-            message: 'Error updating password' 
+            message: 'Gagal: Password tidak berubah (Mungkin ID salah)' 
           });
         }
 
         res.status(200).json({
           success: true,
-          message: 'Password changed successfully'
+          message: 'Password berhasil diperbarui! Silakan login ulang.'
         });
       });
     });
   } catch (error) {
-    res.status(500).json({ 
-      success: false, 
-      message: 'Server error' 
-    });
+    console.error("Server Error:", error);
+    res.status(500).json({ success: false, message: 'Server error' });
   }
 };
-
 
 // Hapus Akun
 exports.deleteAccount = (req, res) => {

@@ -93,7 +93,7 @@ const API = {
   updateProfile: async (name, username) => {
     const token = getToken();
     try {
-        const response = await fetch(`${API_URL}/users/profile`, {
+        const response = await fetch(`${API_URL}/users/update-profile`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -111,7 +111,7 @@ const API = {
   changePassword: async (currentPassword, newPassword) => {
     const token = getToken();
     try {
-        const response = await fetch(`${API_URL}/users/password`, {
+        const response = await fetch(`${API_URL}/users/change-password`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
