@@ -79,6 +79,25 @@ function createTables() {
       console.log('Journals table ready');
     }
   });
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS kendi_rasa (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      journal_id INTEGER NOT NULL UNIQUE, 
+      user_id INTEGER NOT NULL,
+      mood_id INTEGER NOT NULL,
+      position_x INTEGER DEFAULT 0,
+      position_y INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (journal_id) REFERENCES journals(id) ON DELETE CASCADE,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (mood_id) REFERENCES moods(id)
+    )
+  `, (err) => {
+    if (err) console.error('Error creating kendi_rasa table:', err);
+    else console.log('Kendi Rasa table ready');
+  });
 }
 
 module.exports = db;
