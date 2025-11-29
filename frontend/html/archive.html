@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arsip Jurnal - KENDIRASA</title>
+    <link rel="stylesheet" href="../css/archive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="nav-item profile-icon-sidebar" onclick="window.location.href='profile.html'">
+                <i class="fa-regular fa-circle-user"></i>
+            </div>
+
+            <div class="nav-menu">
+                <div class="nav-item" onclick="window.location.href='mainpage.html'">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                
+                <div class="nav-item active">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                
+                <div class="nav-item">
+                    <i class="fa-regular fa-face-smile"></i>
+                </div>
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <h1 class="page-title">ARSIP JURNAL</h1>
+
+            <!-- Filter Buttons -->
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="senang" data-color="#F7D046">
+                    <span class="filter-circle" style="background: #F7D046;"></span> Senang
+                </button>
+                <button class="filter-btn" data-filter="marah" data-color="#D5222A">
+                    <span class="filter-circle" style="background: #D5222A;"></span> Marah
+                </button>
+                <button class="filter-btn" data-filter="sedih" data-color="#2E5DAE">
+                    <span class="filter-circle" style="background: #2E5DAE;"></span> Sedih
+                </button>
+                <button class="filter-btn" data-filter="takut" data-color="#A282C4">
+                    <span class="filter-circle" style="background: #A282C4;"></span> Takut
+                </button>
+                <button class="filter-btn" data-filter="frustasi" data-color="#E66A2B">
+                    <span class="filter-circle" style="background: #E66A2B;"></span> Frustasi
+                </button>
+            </div>
+
+            <!-- Journal Grid -->
+            <div class="journal-grid" id="journalGrid">
+                <!-- Loading state -->
+                <div class="loading-state">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <p>Memuat jurnal...</p>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fa-regular fa-face-sad-tear"></i>
+                <p>Belum ada jurnal yang tersimpan</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- POPUP DETAIL/EDIT JURNAL -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-modal">
+            <button class="popup-close" id="popupClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="popup-header">
+                <div class="popup-emotion-indicator">
+                    <span class="popup-emotion-circle" id="popupEmotionCircle"></span>
+                    <span class="popup-emotion-text" id="popupEmotionText"></span>
+                </div>
+                <span class="popup-date" id="popupDate"></span>
+            </div>
+
+            <!-- Mode VIEW -->
+            <div class="popup-body view-mode" id="viewMode">
+                <p class="journal-content-display" id="journalContentDisplay"></p>
+                
+                <div class="popup-actions">
+                    <button class="btn-edit" id="btnEdit">
+                        <i class="fa-solid fa-pen"></i> Edit
+                    </button>
+                    <button class="btn-delete" id="btnDelete">
+                        <i class="fa-solid fa-trash"></i> Hapus
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mode EDIT -->
+            <div class="popup-body edit-mode" id="editMode" style="display: none;">
+                <!-- Pilih Emosi Baru -->
+                <div class="emotion-selector">
+                    <label>Ubah Emosi:</label>
+                    <div class="emotion-options">
+                        <button class="emotion-option" data-mood-id="1" data-mood-name="senang" data-mood-color="#F7D046">
+                            <span class="emotion-circle" style="background: #F7D046;"></span>
+                        </button>
+                        <button class="emotion-option" data-mood-id="3" data-mood-name="marah" data-mood-color="#D5222A">
+                            <span class="emotion-circle" style="background: #D5222A;"></span>
+                        </button>
+                        <button class="emotion-option" data-mood-id="2" data-mood-name="sedih" data-mood-color="#2E5DAE">
+                            <span class="emotion-circle" style="background: #2E5DAE;"></span>
+                        </button>
+                        <button class="emotion-option" data-mood-id="4" data-mood-name="takut" data-mood-color="#A282C4">
+                            <span class="emotion-circle" style="background: #A282C4;"></span>
+                        </button>
+                        <button class="emotion-option" data-mood-id="5" data-mood-name="frustasi" data-mood-color="#E66A2B">
+                            <span class="emotion-circle" style="background: #E66A2B;"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <textarea class="popup-textarea" id="journalTextEdit" placeholder="Edit jurnal..." maxlength="500"></textarea>
+                
+                <div class="popup-footer">
+                    <button class="btn-cancel" id="btnCancel">Batal</button>
+                    <button class="btn-save" id="btnSave">
+                        <i class="fa-solid fa-check"></i> Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/archive.js"></script>
+
+</body>
+</html>

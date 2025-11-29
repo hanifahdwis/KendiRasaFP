@@ -1,4 +1,4 @@
-// frontend/js/api.js
+// frontend/js/api.js - UPDATED VERSION
 
 // Base URL API
 const API_URL = 'http://localhost:3000/api';
@@ -27,7 +27,7 @@ const handleResponse = async (response) => {
 
 // --- SERVICE API ---
 const API = {
-    // 1. AUTH & USER
+    // ========== 1. AUTH & USER ==========
     register: async (name, username, password) => {
         try {
             const response = await fetch(`${API_URL}/users/register`, {
@@ -97,7 +97,9 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // --- 2. JURNAL (INI YANG TADI ERROR / HILANG) ---
+    // ========== 2. JURNAL (CREATE, READ, UPDATE, DELETE) ==========
+    
+    // CREATE: Buat jurnal baru
     createJournal: async (data) => {
         const token = getToken();
         try {
@@ -113,7 +115,77 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // --- 3. KENDI RASA (BUTIRAN) - INI JUGA TADI HILANG ---
+    // READ: Ambil semua jurnal user
+    getAllJournals: async () => {
+        const token = getToken();
+        try {
+            const response = await fetch(`${API_URL}/journals`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            return await handleResponse(response);
+        } catch (e) { return { success: false, message: 'Koneksi error' }; }
+    },
+
+    // READ: Ambil 1 jurnal by ID
+    getJournalById: async (id) => {
+        const token = getToken();
+        try {
+            const response = await fetch(`${API_URL}/journals/${id}`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            return await handleResponse(response);
+        } catch (e) { return { success: false, message: 'Koneksi error' }; }
+    },
+
+    // UPDATE: Edit jurnal
+    updateJournal: async (id, data) => {
+        const token = getToken();
+        try {
+            const response = await fetch(`${API_URL}/journals/${id}`, {
+                method: 'PUT',
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data) // { mood_id, content }
+            });
+            return await handleResponse(response);
+        } catch (e) { return { success: false, message: 'Koneksi error' }; }
+    },
+
+    // DELETE: Hapus jurnal
+    deleteJournal: async (id) => {
+        const token = getToken();
+        try {
+            const response = await fetch(`${API_URL}/journals/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            return await handleResponse(response);
+        } catch (e) { return { success: false, message: 'Koneksi error' }; }
+    },
+
+    // ========== 3. KENDI RASA (BUTIRAN) ==========
+    
+    // CREATE: Buat butiran baru
+    createButiran: async (journalId, moodId) => {
+        const token = getToken();
+        try {
+            const response = await fetch(`${API_URL}/kendi-rasa`, {
+                method: 'POST',
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ journal_id: journalId, mood_id: moodId })
+            });
+            return await handleResponse(response);
+        } catch (e) { return { success: false, message: 'Koneksi error' }; }
+    },
+
+    // READ: Ambil semua butiran user
     getAllButiran: async () => {
         const token = getToken();
         try {
@@ -125,16 +197,29 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    createButiran: async (journalId, moodId) => {
+    // UPDATE: Ubah warna butiran (mood_id)
+    updateButiranMood: async (journalId, newMoodId) => {
         const token = getToken();
         try {
-            const response = await fetch(`${API_URL}/kendi-rasa`, {
-                method: 'POST',
+            const response = await fetch(`${API_URL}/kendi-rasa/mood`, {
+                method: 'PUT',
                 headers: { 
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ journal_id: journalId, mood_id: moodId })
+                body: JSON.stringify({ journal_id: journalId, mood_id: newMoodId })
+            });
+            return await handleResponse(response);
+        } catch (e) { return { success: false, message: 'Koneksi error' }; }
+    },
+
+    // DELETE: Hapus butiran by journal_id
+    deleteButiranByJournal: async (journalId) => {
+        const token = getToken();
+        try {
+            const response = await fetch(`${API_URL}/kendi-rasa/journal/${journalId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
             });
             return await handleResponse(response);
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
