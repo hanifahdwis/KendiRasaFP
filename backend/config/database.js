@@ -34,25 +34,29 @@ function createTables() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       color TEXT NOT NULL,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      icon TEXT,
+      user_id INTEGER, -- Tambahan: Siapa yang bikin (NULL kalau default)
+      is_default BOOLEAN DEFAULT 0, -- Tambahan: Penanda rasa bawaan
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )
   `, (err) => {
-    if (err) {
-      console.error('Error creating moods table:', err);
-    } else {
+    if (err) console.error('Error creating moods table:', err);
+    else {
       console.log('Moods table ready');
       
+      // Cek data default, kalau kosong isi
       db.get('SELECT COUNT(*) as count FROM moods', (err, row) => {
         if (!err && row.count === 0) {
           const defaultMoods = [
-            ['Senang', '#F7D046'],
-            ['Sedih', '#2E5DAE'],
-            ['Marah', '#D5222A'],
-            ['Takut', '#A282C4'],
-            ['Frustasi', '#E66A2B']
+            ['Senang', '#F7D046', 1], 
+            ['Sedih', '#2E5DAE', 1],
+            ['Marah', '#D5222A', 1],
+            ['Takut', '#A282C4', 1],
+            ['Frustasi', '#E66A2B', 1]
           ];
           
-          const stmt = db.prepare('INSERT INTO moods (name, color) VALUES (?, ?)');
+          const stmt = db.prepare('INSERT INTO moods (name, color, is_default) VALUES (?, ?, ?)');
           defaultMoods.forEach(mood => stmt.run(mood));
           stmt.finalize();
           console.log('Default moods inserted');

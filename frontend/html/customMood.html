@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Rasa - KENDIRASA</title>
+    <link rel="stylesheet" href="../css/customMood.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="nav-item profile-icon-sidebar" onclick="window.location.href='profile.html'">
+                <i class="fa-regular fa-circle-user"></i>
+            </div>
+
+            <div class="nav-menu">
+                <div class="nav-item" onclick="window.location.href='mainpage.html'">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                
+                <div class="nav-item" onclick="window.location.href='archive.html'">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                
+                <div class="nav-item active">
+                    <i class="fa-regular fa-face-smile"></i>
+                </div>
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <h1 class="page-title">KELOLA RASA</h1>
+
+            <!-- MOODS CONTAINER -->
+            <div class="moods-container" id="moodsContainer">
+                <!-- Loading state -->
+                <div class="loading-state">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <p>Memuat data rasa...</p>
+                </div>
+            </div>
+
+            <!-- EMPTY STATE -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fa-regular fa-face-meh"></i>
+                <p>Belum ada rasa custom yang ditambahkan</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL ADD/EDIT RASA -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2 class="modal-title" id="modalTitle">Tambah Rasa Baru</h2>
+
+            <form id="moodForm">
+                <div class="form-group">
+                    <label for="moodName">Nama Rasa</label>
+                    <input 
+                        type="text" 
+                        id="moodName" 
+                        placeholder="Contoh: Gembira, Cemas, Rileks..." 
+                        maxlength="20"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Pilih Warna</label>
+                    <input 
+                        type="text" 
+                        id="colorCode" 
+                        class="color-code-input"
+                        placeholder="Contoh: #FF69B4 (Kode HEX)"
+                        maxlength="7"
+                    >
+
+                    <!-- Preset Colors -->
+                    <div class="preset-colors">
+                        <button type="button" class="preset-color" data-color="#FF69B4" style="background: #FF69B4"></button>
+                        <button type="button" class="preset-color" data-color="#9B59B6" style="background: #9B59B6"></button>
+                        <button type="button" class="preset-color" data-color="#3498DB" style="background: #3498DB"></button>
+                        <button type="button" class="preset-color" data-color="#1ABC9C" style="background: #1ABC9C"></button>
+                        <button type="button" class="preset-color" data-color="#F39C12" style="background: #F39C12"></button>
+                        <button type="button" class="preset-color" data-color="#E74C3C" style="background: #E74C3C"></button>
+                        <button type="button" class="preset-color" data-color="#95A5A6" style="background: #95A5A6"></button>
+                        <button type="button" class="preset-color" data-color="#34495E" style="background: #34495E"></button>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="btnCancel">
+                        Batal
+                    </button>
+                    <button type="submit" class="btn-save" id="btnSave">
+                        <i class="fa-solid fa-check"></i>
+                        Simpan
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Tombol Hapus (hanya muncul saat edit) -->
+            <div id="deleteSection" style="display: none; margin-top: 20px; text-align: center; border-top: 1px solid #ddd; padding-top: 20px;">
+                <button type="button" class="btn-delete-modal" id="btnDeleteModal">
+                    <i class="fa-solid fa-trash"></i>
+                    Hapus Rasa
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/customMood.js"></script>
+
+</body>
+</html>

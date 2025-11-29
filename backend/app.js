@@ -3,6 +3,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const journalRoutes = require('./routes/journalRoutes');
 const moodRoutes = require('./routes/moodRoutes');
+const customMoodRoutes = require('./routes/customMoodRoutes');
 const app = express();
 
 // Middleware
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/users', userRoutes);
 app.use('/api/journals', journalRoutes);
 app.use('/api/kendi-rasa', moodRoutes);
+app.use('/api/custom-moods', customMoodRoutes);
 
 // Health check route
 app.get('/', (req, res) => {

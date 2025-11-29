@@ -98,14 +98,14 @@ const API = {
     },
 
     // ========== 2. JURNAL (CREATE, READ, UPDATE, DELETE) ==========
-    
+
     // CREATE: Buat jurnal baru
     createJournal: async (data) => {
         const token = getToken();
         try {
             const response = await fetch(`${API_URL}/journals`, {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
@@ -145,7 +145,7 @@ const API = {
         try {
             const response = await fetch(`${API_URL}/journals/${id}`, {
                 method: 'PUT',
-                headers: { 
+                headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
@@ -168,14 +168,14 @@ const API = {
     },
 
     // ========== 3. KENDI RASA (BUTIRAN) ==========
-    
+
     // CREATE: Buat butiran baru
     createButiran: async (journalId, moodId) => {
         const token = getToken();
         try {
             const response = await fetch(`${API_URL}/kendi-rasa`, {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
@@ -203,7 +203,7 @@ const API = {
         try {
             const response = await fetch(`${API_URL}/kendi-rasa/mood`, {
                 method: 'PUT',
-                headers: { 
+                headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
@@ -223,7 +223,66 @@ const API = {
             });
             return await handleResponse(response);
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
+    },
+
+    // ========== 4. CUSTOM MOODS (KELOLA RASA) ==========
+
+// CREATE: Tambah rasa baru
+createCustomMood: async (name, color) => {
+        const token = getToken();
+        try {
+            const response = await fetch(`${API_URL}/custom-moods`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, color })
+            });
+            return await handleResponse(response);
+        } catch (e) { return { success: false, message: 'Koneksi error' }; }
+    },
+
+    // READ: Ambil semua rasa
+    getAllCustomMoods: async () => {
+        const token = getToken();
+        try {
+            const response = await fetch(`${API_URL}/custom-moods`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            return await handleResponse(response);
+        } catch (e) { return { success: false, message: 'Koneksi error' }; }
+    },
+
+    // UPDATE: Edit rasa
+    updateCustomMood: async (id, name, color) => {
+        const token = getToken();
+        try {
+            const response = await fetch(`${API_URL}/custom-moods/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, color })
+            });
+            return await handleResponse(response);
+        } catch (e) { return { success: false, message: 'Koneksi error' }; }
+    },
+
+    // DELETE: Hapus rasa
+    deleteCustomMood: async (id) => {
+        const token = getToken();
+        try {
+            const response = await fetch(`${API_URL}/custom-moods/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            return await handleResponse(response);
+        } catch (e) { return { success: false, message: 'Koneksi error' }; }
     }
+
 };
 
 // --- AUTH HELPER ---
@@ -240,3 +299,4 @@ const Auth = {
         }
     }
 };
+

@@ -1,0 +1,406 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body {
+    background-color: #F3EFE7;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ========== LAYOUT ========== */
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+    width: 100px;
+    background-color: #E6D2CA;
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    bottom: 25px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0;
+    z-index: 20;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    margin-top: 20px;
+}
+
+.nav-item {
+    font-size: 2rem;
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-item:hover { 
+    transform: scale(1.1); 
+}
+
+.nav-item.active { 
+    color: #FDFBF7; 
+}
+
+.profile-icon-sidebar {
+    color: #000;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.logout-btn {
+    margin-top: auto;
+    background: none;
+    border: none;
+    font-size: 2.2rem;
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.logout-btn:hover {
+    transform: scale(1.1);
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content {
+    margin-left: 150px;
+    padding: 40px 60px 40px 40px;
+    width: calc(100% - 150px);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #B8926D;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ========== MOODS CONTAINER (PILLS) ========== */
+.moods-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+.mood-pill {
+    background: #D58677;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: lowercase;
+}
+
+.mood-pill.custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.mood-pill.default {
+    cursor: default;
+    opacity: 0.85;
+}
+
+.btn-add-mood-pill {
+    background: #D58677;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-add-mood-pill:hover {
+    background: #c07566;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== LOADING & EMPTY STATE ========== */
+.loading-state,
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+    width: 100%;
+}
+
+.loading-state i,
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: #D58677;
+}
+
+.empty-state {
+    display: none;
+}
+
+.empty-state p {
+    font-size: 1.2rem;
+}
+
+/* ========== MODAL ========== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #FFF8F0;
+    padding: 35px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease-out;
+    position: relative;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+.modal-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #E6D2CA;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input[type="text"]:focus {
+    outline: none;
+    border-color: #D58677;
+}
+
+/* ========== COLOR INPUT ========== */
+.color-code-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #E6D2CA;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    transition: border-color 0.3s;
+}
+
+.color-code-input::placeholder {
+    color: #999;
+    text-transform: none;
+}
+
+.color-code-input:focus {
+    outline: none;
+    border-color: #D58677;
+}
+
+.preset-colors {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.preset-color {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.preset-color:hover {
+    transform: scale(1.1);
+    border-color: #333;
+}
+
+.preset-color.selected {
+    border-color: #333;
+    box-shadow: 0 0 0 2px #FFF8F0, 0 0 0 5px #333;
+}
+
+/* ========== MODAL ACTIONS ========== */
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.btn-cancel,
+.btn-save {
+    flex: 1;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-cancel {
+    background: #F3EFE7;
+    color: #666;
+    border: 2px solid #E6D2CA;
+}
+
+.btn-cancel:hover {
+    background: #e0d4c8;
+}
+
+.btn-save {
+    background: #D58677;
+    color: white;
+}
+
+.btn-save:hover {
+    background: #b06557;
+}
+
+.btn-save:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-delete-modal {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: #E63946;
+    color: white;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-delete-modal:hover {
+    background: #c92a35;
+    transform: translateY(-2px);
+}
+
+
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: #F3EFE7;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: #D58677;
+    border-radius: 10px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+    background: #b06557;
+}
