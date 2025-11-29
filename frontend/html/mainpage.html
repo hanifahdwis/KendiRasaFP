@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page - KENDIRASA</title>
+    <link rel="stylesheet" href="../css/mainpage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="nav-item profile-icon-sidebar" onclick="window.location.href='profile.html'">
+                <i class="fa-regular fa-circle-user"></i>
+            </div>
+
+            <div class="nav-menu">
+                <div class="nav-item active">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                
+                <div class="nav-item" onclick="window.location.href='archive.html'">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                
+                <div class="nav-item">
+                    <i class="fa-regular fa-face-smile"></i>
+                </div>
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+        </aside>
+
+        <main class="main-content">
+            <h1 class="page-title">KENDIRASA</h1>
+
+            <div class="content-wrapper">
+                
+                <div class="kendi-section">
+                    <div class="kendi-container">
+                        <div class="ball-container" id="ballContainer"></div>
+                        <div class="kendi-overlay">
+                            <img src="../image/kendi.png" alt="Visualisasi Kendi" class="kendi-img">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="emotion-section">
+                    <button class="emotion-btn" data-emotion="senang" data-color="#F4C430">
+                        <span class="emotion-circle" style="background: #F7D046;"></span>
+                        <span class="emotion-label">senang</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="marah" data-color="#E63946">
+                        <span class="emotion-circle" style="background: #D5222A;"></span>
+                        <span class="emotion-label">marah</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="sedih" data-color="#457B9D">
+                        <span class="emotion-circle" style="background: #2E5DAE;"></span>
+                        <span class="emotion-label">sedih</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="takut" data-color="#B8B8D0">
+                        <span class="emotion-circle" style="background: #A282C4;"></span>
+                        <span class="emotion-label">takut</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="frustasi" data-color="#FF6B35">
+                        <span class="emotion-circle" style="background: #E66A2B;"></span>
+                        <span class="emotion-label">frustasi</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-modal">
+            <div class="popup-header">
+                <div class="popup-emotion-indicator">
+                    <span class="popup-emotion-circle" id="popupEmotionCircle"></span>
+                    <span class="popup-emotion-text" id="popupEmotionText"></span>
+                </div>
+            </div>
+            <div class="popup-body">
+                <textarea class="popup-textarea" id="journalText" placeholder="Tulis perasaanmu di sini..." maxlength="500"></textarea>
+            </div>
+            <div class="popup-footer">
+                <button class="btn-simpan" id="btnSimpan">simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-modal">
+            <div class="popup-header">
+                <div class="popup-emotion-indicator">
+                    <span class="popup-emotion-circle" id="popupEmotionCircle"></span>
+                    <span class="popup-emotion-text" id="popupEmotionText"></span>
+                </div>
+            </div>
+            
+            <div class="popup-body">
+                <textarea 
+                    class="popup-textarea" 
+                    id="journalText" 
+                    placeholder="Tulis perasaanmu di sini..."
+                    maxlength="500"
+                ></textarea>
+            </div>
+            
+            <div class="popup-footer">
+                <button class="btn-simpan" id="btnSimpan">simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/mainpage.js"></script>
+
+</body>
+</html>
