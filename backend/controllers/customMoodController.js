@@ -1,17 +1,12 @@
-// backend/controllers/customMoodController.js
 const CustomMoodModel = require('../models/customMoodModels');
-
-// Helper Validasi Warna Hex
 const isValidHexColor = (color) => {
   return /^#[0-9A-Fa-f]{6}$/.test(color);
 };
 
-// 1. CREATE MOOD
 exports.createCustomMood = (req, res) => {
-  const userId = req.userId; // Dari token
+  const userId = req.userId; 
   const { name, color } = req.body;
 
-  // Validasi Input
   if (!name || !color) {
     return res.status(400).json({ success: false, message: 'Nama dan warna rasa harus diisi' });
   }
@@ -22,18 +17,15 @@ exports.createCustomMood = (req, res) => {
     return res.status(400).json({ success: false, message: 'Format warna tidak valid (Gunakan Hex #RRGGBB)' });
   }
 
-  // Panggil Model
   CustomMoodModel.create(userId, { name: name.trim(), color }, (err, mood) => {
     if (err) {
       console.error('Error creating custom mood:', err);
-      // Kalau errornya dari model (misal nama duplikat), kirim pesan errornya
       return res.status(400).json({ success: false, message: err.message || 'Gagal membuat rasa baru' });
     }
     res.status(201).json({ success: true, message: 'Rasa baru berhasil ditambahkan', data: mood });
   });
 };
 
-// 2. GET ALL MOODS
 exports.getAllMoods = (req, res) => {
   const userId = req.userId;
   CustomMoodModel.getAllByUser(userId, (err, moods) => {
@@ -42,7 +34,6 @@ exports.getAllMoods = (req, res) => {
   });
 };
 
-// 3. GET BY ID (Opsional, buat edit form)
 exports.getMoodById = (req, res) => {
   const userId = req.userId;
   const moodId = req.params.id;
@@ -54,7 +45,6 @@ exports.getMoodById = (req, res) => {
   });
 };
 
-// 4. UPDATE MOOD
 exports.updateCustomMood = (req, res) => {
   const userId = req.userId;
   const moodId = req.params.id;
@@ -69,7 +59,6 @@ exports.updateCustomMood = (req, res) => {
   });
 };
 
-// 5. DELETE MOOD
 exports.deleteCustomMood = (req, res) => {
   const userId = req.userId;
   const moodId = req.params.id;

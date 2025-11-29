@@ -17,7 +17,6 @@ app.use('/api/journals', journalRoutes);
 app.use('/api/kendi-rasa', moodRoutes);
 app.use('/api/custom-moods', customMoodRoutes);
 
-// Health check route
 app.get('/', (req, res) => {
   res.json({ 
     message: 'KENDIRASA API is running',
@@ -26,7 +25,6 @@ app.get('/', (req, res) => {
   });
 });
 
-// 404 handler
 app.use((req, res) => {
   res.status(404).json({ 
     success: false,
@@ -34,7 +32,6 @@ app.use((req, res) => {
   });
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ 

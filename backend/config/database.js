@@ -44,18 +44,16 @@ function createTables() {
     if (err) console.error('Error creating moods table:', err);
     else {
       console.log('Moods table ready');
-      
-      // Cek data default, kalau kosong isi
       db.get('SELECT COUNT(*) as count FROM moods', (err, row) => {
         if (!err && row.count === 0) {
           const defaultMoods = [
-            ['Senang', '#F7D046', 1], 
+            ['Senang', '#F7D046', 1],
             ['Sedih', '#2E5DAE', 1],
             ['Marah', '#D5222A', 1],
             ['Takut', '#A282C4', 1],
             ['Frustasi', '#E66A2B', 1]
           ];
-          
+
           const stmt = db.prepare('INSERT INTO moods (name, color, is_default) VALUES (?, ?, ?)');
           defaultMoods.forEach(mood => stmt.run(mood));
           stmt.finalize();

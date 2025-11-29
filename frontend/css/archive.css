@@ -161,7 +161,7 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     cursor: pointer;
     transition: all 0.3s;
-    border-left: 5px solid;
+    /* DIHAPUS: border-left: 5px solid; */
     position: relative;
     overflow: hidden;
 }
@@ -206,7 +206,7 @@ body {
     color: #555;
     font-size: 0.95rem;
     line-height: 1.5;
-    max-height: 4.5em; /* 3 lines × 1.5 line-height */
+    max-height: 4.5em;
     overflow: hidden;
     position: relative;
 }

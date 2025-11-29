@@ -2,9 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 
-
-
-// Register
 exports.register = async (req, res) => {
   try {
     const { name, username, password } = req.body;
@@ -62,9 +59,6 @@ exports.register = async (req, res) => {
   }
 };
 
-
-
-// Login
 exports.login = (req, res) => {
   try {
     const { username, password } = req.body;
@@ -127,9 +121,6 @@ exports.login = (req, res) => {
   }
 };
 
-
-
-// Get Profile
 exports.getProfile = (req, res) => {
   UserModel.findById(req.userId, (err, user) => {
     if (err) {
@@ -153,9 +144,6 @@ exports.getProfile = (req, res) => {
   });
 };
 
-
-
-// Update Profil
 exports.updateProfile = (req, res) => {
   const { name, username } = req.body;
 
@@ -187,14 +175,9 @@ exports.updateProfile = (req, res) => {
   });
 };
 
-
-
-// Ubah Password
 exports.changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
-
-    // 1. Cek Input
     if (!currentPassword || !newPassword) {
       return res.status(400).json({ 
         success: false, 
@@ -202,7 +185,6 @@ exports.changePassword = async (req, res) => {
       });
     }
 
-    // DEBUG: Cek apakah ID user kebaca?
     console.log("--- DEBUG GANTI PASSWORD ---");
     console.log("User ID dari Token:", req.userId);
 
@@ -214,7 +196,6 @@ exports.changePassword = async (req, res) => {
         return res.status(404).json({ success: false, message: 'User tidak ditemukan' });
       }
 
-      // 2. Cek Password Lama
       const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
       if (!isPasswordValid) {
         return res.status(401).json({ 
@@ -223,11 +204,9 @@ exports.changePassword = async (req, res) => {
         });
       }
 
-      // 3. Hash Password Baru
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       console.log("Hash Password Baru:", hashedPassword);
 
-      // 4. Update ke Database
       UserModel.updatePassword(req.userId, hashedPassword, (err, result) => {
         if (err) {
           console.error("Error SQL:", err);
@@ -238,7 +217,6 @@ exports.changePassword = async (req, res) => {
         console.log("Hasil perubahan SQLite:", result);
         
         if (result.changes === 0) {
-          // Kalau 0, berarti gagal update walau tidak error
           return res.status(400).json({ 
             success: false, 
             message: 'Gagal: Password tidak berubah (Mungkin ID salah)' 
@@ -257,7 +235,6 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-// Hapus Akun
 exports.deleteAccount = (req, res) => {
   UserModel.delete(req.userId, (err, result) => {
     if (err) {

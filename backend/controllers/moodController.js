@@ -1,4 +1,4 @@
-const MoodModel = require('../models/moodModels'); // Pastikan path modelnya bener (pake 's' atau ngga)
+const MoodModel = require('../models/moodModels'); 
 
 exports.createButiranRasa = (req, res) => {
   const randomX = Math.floor(Math.random() * 80) + 10; 

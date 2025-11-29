@@ -1,7 +1,6 @@
 const db = require('../config/database');
 
 const MoodModel = {
-  // CREATE: Tambah butiran rasa saat user buat jurnal
   create: (kendiRasaData, callback) => {
     const { journal_id, user_id, mood_id, position_x, position_y } = kendiRasaData;
     const query = `
@@ -13,7 +12,6 @@ const MoodModel = {
       if (err) {
         callback(err, null);
       } else {
-        // Return data lengkap dengan info mood
         const selectQuery = `
           SELECT kr.*, m.name as mood_name, m.color as mood_color
           FROM kendi_rasa kr
@@ -32,7 +30,6 @@ const MoodModel = {
     });
   },
 
-  // READ: Get semua butiran rasa milik user (untuk tampil di main page)
   getAllByUserId: (userId, callback) => {
     const query = `
       SELECT 
@@ -56,7 +53,6 @@ const MoodModel = {
     });
   },
 
-  // READ: Get butiran rasa by ID (untuk popup detail)
   getById: (id, callback) => {
     const query = `
       SELECT 
@@ -80,7 +76,6 @@ const MoodModel = {
     });
   },
 
-  // READ: Get butiran rasa by journal_id (untuk lihat butiran dari jurnal tertentu)
   getByJournalId: (journalId, callback) => {
     const query = `
       SELECT 
@@ -101,7 +96,6 @@ const MoodModel = {
     });
   },
 
-  // UPDATE: Update warna butiran rasa saat jurnal diedit
   updateMood: (journalId, newMoodId, callback) => {
     const query = 'UPDATE kendi_rasa SET mood_id = ?, updated_at = CURRENT_TIMESTAMP WHERE journal_id = ?';
     
@@ -114,7 +108,6 @@ const MoodModel = {
     });
   },
 
-  // UPDATE: Update posisi butiran (optional - kalau mau drag & drop)
   updatePosition: (id, positionX, positionY, callback) => {
     const query = 'UPDATE kendi_rasa SET position_x = ?, position_y = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
     
@@ -127,7 +120,6 @@ const MoodModel = {
     });
   },
 
-  // DELETE: Hapus butiran rasa saat jurnal dihapus
   deleteByJournalId: (journalId, callback) => {
     const query = 'DELETE FROM kendi_rasa WHERE journal_id = ?';
     
@@ -140,7 +132,6 @@ const MoodModel = {
     });
   },
 
-  // DELETE: Hapus butiran rasa by ID
   delete: (id, callback) => {
     const query = 'DELETE FROM kendi_rasa WHERE id = ?';
     
@@ -153,12 +144,10 @@ const MoodModel = {
     });
   },
 
-  // Fungsi helper untuk generate posisi random butiran
   generateRandomPosition: (callback) => {
-    // Posisi dalam persentase (0-100) untuk responsive
     const position = {
-      x: Math.floor(Math.random() * 80) + 10, // 10-90% dari lebar kendi
-      y: Math.floor(Math.random() * 70) + 10  // 10-80% dari tinggi kendi
+      x: Math.floor(Math.random() * 80) + 10, 
+      y: Math.floor(Math.random() * 70) + 10  
     };
     callback(null, position);
   }

@@ -38,9 +38,8 @@
       });
     },
 
-    //Fungsi Khusus untuk Authentication
     findByIdWithPassword: (id, callback) => {
-  const query = `SELECT * FROM users WHERE id = ?`;  // Ambil semua termasuk password
+  const query = `SELECT * FROM users WHERE id = ?`;  
   
   db.get(query, [id], (err, row) => {
     if (err) {
