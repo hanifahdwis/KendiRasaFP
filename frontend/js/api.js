@@ -1,10 +1,8 @@
 
 const API_URL = 'http://localhost:3000/api';
 
-// Helper: Ambil Token dari LocalStorage
 const getToken = () => localStorage.getItem('token');
 
-// Helper: Handle Respon API
 const handleResponse = async (response) => {
     try {
         const contentType = response.headers.get("content-type");
@@ -23,9 +21,7 @@ const handleResponse = async (response) => {
     }
 };
 
-// --- SERVICE API ---
 const API = {
-    // ========== 1. AUTH & USER ==========
     register: async (name, username, password) => {
         try {
             const response = await fetch(`${API_URL}/users/register`, {
@@ -95,9 +91,6 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // ========== 2. JURNAL (CREATE, READ, UPDATE, DELETE) ==========
-
-    // CREATE: Buat jurnal baru
     createJournal: async (data) => {
         const token = getToken();
         try {
@@ -107,13 +100,12 @@ const API = {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data) // { mood_id, content }
+                body: JSON.stringify(data) 
             });
             return await handleResponse(response);
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // READ: Ambil semua jurnal user
     getAllJournals: async () => {
         const token = getToken();
         try {
@@ -125,7 +117,6 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // READ: Ambil 1 jurnal by ID
     getJournalById: async (id) => {
         const token = getToken();
         try {
@@ -137,7 +128,6 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // UPDATE: Edit jurnal
     updateJournal: async (id, data) => {
         const token = getToken();
         try {
@@ -147,13 +137,12 @@ const API = {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data) // { mood_id, content }
+                body: JSON.stringify(data) 
             });
             return await handleResponse(response);
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // DELETE: Hapus jurnal
     deleteJournal: async (id) => {
         const token = getToken();
         try {
@@ -165,9 +154,6 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // ========== 3. KENDI RASA (BUTIRAN) ==========
-
-    // CREATE: Buat butiran baru
     createButiran: async (journalId, moodId) => {
         const token = getToken();
         try {
@@ -183,7 +169,6 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // READ: Ambil semua butiran user
     getAllButiran: async () => {
         const token = getToken();
         try {
@@ -195,7 +180,6 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // UPDATE: Ubah warna butiran (mood_id)
     updateButiranMood: async (journalId, newMoodId) => {
         const token = getToken();
         try {
@@ -211,7 +195,6 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // DELETE: Hapus butiran by journal_id
     deleteButiranByJournal: async (journalId) => {
         const token = getToken();
         try {
@@ -223,9 +206,6 @@ const API = {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // ========== 4. CUSTOM MOODS (KELOLA RASA) ==========
-
-// CREATE: Tambah rasa baru
 createCustomMood: async (name, color) => {
         const token = getToken();
         try {
@@ -241,7 +221,6 @@ createCustomMood: async (name, color) => {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // READ: Ambil semua rasa
     getAllCustomMoods: async () => {
         const token = getToken();
         try {
@@ -253,7 +232,6 @@ createCustomMood: async (name, color) => {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // UPDATE: Edit rasa
     updateCustomMood: async (id, name, color) => {
         const token = getToken();
         try {
@@ -269,7 +247,6 @@ createCustomMood: async (name, color) => {
         } catch (e) { return { success: false, message: 'Koneksi error' }; }
     },
 
-    // DELETE: Hapus rasa
     deleteCustomMood: async (id) => {
         const token = getToken();
         try {
@@ -283,7 +260,6 @@ createCustomMood: async (name, color) => {
 
 };
 
-// --- AUTH HELPER ---
 const Auth = {
     isLoggedIn: () => !!getToken(),
     logout: () => {
