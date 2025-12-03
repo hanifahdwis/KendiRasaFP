@@ -159,14 +159,13 @@ body {
     text-decoration: underline;
 }
 
-/*animasi smooth buat pindah dari login signup*/
 @keyframes smoothAppear {
     from {
         opacity: 0;
-        transform: translateY(20px); /* Mulai dari agak bawah dikit */
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
-        transform: translateY(0); /* Kembali ke posisi asal */
+        transform: translateY(0); 
     }
 }

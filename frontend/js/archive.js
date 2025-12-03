@@ -1,7 +1,5 @@
-// Cek Login
 Auth.requireAuth();
 
-// ========== DOM ELEMENTS ==========
 const journalGrid = document.getElementById('journalGrid');
 const filterButtons = document.querySelectorAll('.filter-btn');
 const popupOverlay = document.getElementById('popupOverlay');
@@ -10,7 +8,6 @@ const viewMode = document.getElementById('viewMode');
 const editMode = document.getElementById('editMode');
 const logoutBtn = document.getElementById('logoutBtn');
 
-// Elements di mode VIEW
 const popupEmotionCircle = document.getElementById('popupEmotionCircle');
 const popupEmotionText = document.getElementById('popupEmotionText');
 const popupDate = document.getElementById('popupDate');
@@ -18,18 +15,15 @@ const journalContentDisplay = document.getElementById('journalContentDisplay');
 const btnEdit = document.getElementById('btnEdit');
 const btnDelete = document.getElementById('btnDelete');
 
-// Elements di mode EDIT
 const emotionOptions = document.querySelectorAll('.emotion-option');
 const journalTextEdit = document.getElementById('journalTextEdit');
 const btnCancel = document.getElementById('btnCancel');
 const btnSave = document.getElementById('btnSave');
 
-// ========== STATE ==========
 let allJournals = [];
 let currentJournal = null;
 let selectedMoodId = null;
 
-// Mapping ID mood (Sama dengan mainpage.js)
 const moodMap = {
     1: { name: 'senang', color: '#F7D046' },
     2: { name: 'sedih', color: '#2E5DAE' },
@@ -38,7 +32,6 @@ const moodMap = {
     5: { name: 'frustasi', color: '#E66A2B' }
 };
 
-// ========== INIT: LOAD JOURNALS ==========
 document.addEventListener('DOMContentLoaded', loadJournals);
 
 async function loadJournals() {
@@ -67,7 +60,6 @@ async function loadJournals() {
     }
 }
 
-// ========== RENDER JOURNALS ==========
 function renderJournals(journals) {
     journalGrid.innerHTML = '';
     
@@ -94,7 +86,6 @@ function createJournalCard(journal) {
         year: 'numeric' 
     });
     
-    // Potong konten jika terlalu panjang
     const preview = journal.content.length > 120 
         ? journal.content.substring(0, 120) + '...' 
         : journal.content;
@@ -115,10 +106,8 @@ function createJournalCard(journal) {
     return card;
 }
 
-// ========== FILTER ==========
 filterButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-        // Toggle active state
         filterButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         
@@ -133,12 +122,10 @@ filterButtons.forEach(btn => {
     });
 });
 
-// ========== POPUP FUNCTIONS ==========
 function openJournalPopup(journal) {
     currentJournal = journal;
     selectedMoodId = journal.mood_id;
     
-    // Set data ke popup
     popupEmotionCircle.style.backgroundColor = journal.mood_color;
     popupEmotionText.textContent = journal.mood_name;
     
@@ -152,7 +139,6 @@ function openJournalPopup(journal) {
     
     journalContentDisplay.textContent = journal.content;
     
-    // Show VIEW mode
     viewMode.style.display = 'block';
     editMode.style.display = 'none';
     
@@ -164,20 +150,15 @@ function closePopup() {
     currentJournal = null;
     selectedMoodId = null;
     
-    // Reset emotion selection
     emotionOptions.forEach(opt => opt.classList.remove('selected'));
 }
 
-// ========== EDIT MODE ==========
 btnEdit.addEventListener('click', () => {
-    // Switch ke mode EDIT
     viewMode.style.display = 'none';
     editMode.style.display = 'block';
     
-    // Isi textarea dengan konten saat ini
     journalTextEdit.value = currentJournal.content;
     
-    // Pre-select mood yang sekarang
     emotionOptions.forEach(opt => {
         if (parseInt(opt.dataset.moodId) === currentJournal.mood_id) {
             opt.classList.add('selected');
@@ -185,7 +166,6 @@ btnEdit.addEventListener('click', () => {
     });
 });
 
-// Select emotion baru
 emotionOptions.forEach(opt => {
     opt.addEventListener('click', () => {
         emotionOptions.forEach(o => o.classList.remove('selected'));
@@ -194,18 +174,14 @@ emotionOptions.forEach(opt => {
     });
 });
 
-// ========== CANCEL EDIT ==========
 btnCancel.addEventListener('click', () => {
-    // Kembali ke mode VIEW
     viewMode.style.display = 'block';
     editMode.style.display = 'none';
     
-    // Reset selection
     selectedMoodId = currentJournal.mood_id;
     emotionOptions.forEach(opt => opt.classList.remove('selected'));
 });
 
-// ========== UPDATE JOURNAL ==========
 btnSave.addEventListener('click', async () => {
     const newContent = journalTextEdit.value.trim();
     
@@ -230,10 +206,8 @@ btnSave.addEventListener('click', async () => {
         });
         
         if (result.success) {
-            // Update butiran rasa di mainpage (warna bola)
             await API.updateButiranMood(currentJournal.id, selectedMoodId);
             
-            // Refresh data
             await loadJournals();
             
             closePopup();
@@ -250,7 +224,6 @@ btnSave.addEventListener('click', async () => {
     }
 });
 
-// ========== DELETE JOURNAL ==========
 btnDelete.addEventListener('click', async () => {
     if (!confirm('Apakah kamu yakin ingin menghapus jurnal ini? Tindakan ini tidak dapat dibatalkan.')) {
         return;
@@ -264,10 +237,8 @@ btnDelete.addEventListener('click', async () => {
         const result = await API.deleteJournal(currentJournal.id);
         
         if (result.success) {
-            // Hapus juga butiran rasa di mainpage
             await API.deleteButiranByJournal(currentJournal.id);
             
-            // Refresh data
             await loadJournals();
             
             closePopup();
@@ -284,7 +255,6 @@ btnDelete.addEventListener('click', async () => {
     }
 });
 
-// ========== UI HELPERS ==========
 function showLoading() {
     journalGrid.innerHTML = '<div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i><p>Memuat jurnal...</p></div>';
 }
@@ -303,7 +273,6 @@ function showError(message) {
 }
 
 function showSuccess(message) {
-    // Simple notification (bisa dipercantik)
     const notif = document.createElement('div');
     notif.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 15px 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 9999; font-family: Montserrat; font-weight: 600;';
     notif.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${message}`;
@@ -315,13 +284,11 @@ function showSuccess(message) {
     }, 3000);
 }
 
-// ========== CLOSE POPUP ==========
 popupClose.addEventListener('click', closePopup);
 popupOverlay.addEventListener('click', (e) => {
     if (e.target === popupOverlay) closePopup();
 });
 
-// ========== LOGOUT ==========
 logoutBtn.addEventListener('click', () => {
     if (confirm('Yakin ingin logout?')) Auth.logout();
 });

@@ -38,16 +38,10 @@ exports.register = async (req, res) => {
           });
         }
 
-        const token = jwt.sign(
-          { id: user.id, username: user.username },
-          process.env.JWT_SECRET,
-          { expiresIn: process.env.JWT_EXPIRE }
-        );
-
         res.status(201).json({
           success: true,
           message: 'User registered successfully',
-          data: { user, token }
+          data: { user}
         });
       });
     });

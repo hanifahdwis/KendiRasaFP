@@ -1,6 +1,4 @@
-// frontend/js/api.js - UPDATED VERSION
 
-// Base URL API
 const API_URL = 'http://localhost:3000/api';
 
 // Helper: Ambil Token dari LocalStorage

@@ -14,7 +14,6 @@ body {
     overflow: hidden;
 }
 
-/* --- DASHBOARD LAYOUT --- */
 .dashboard-container {
     display: flex;
     width: 100%;
@@ -22,25 +21,23 @@ body {
     position: relative;
 }
 
-/* --- SIDEBAR (FLOATING/MENGAMBANG) --- */
 .sidebar {
     width: 100px;
-    background-color: #E6D2CA; /* Warna Pink Pastel */
-    
-    /* POSISI MENGAMBANG (Jarak dari atas, kiri, bawah) */
+    background-color: #E6D2CA; 
+
     position: fixed;
     top: 25px;
     left: 25px;
     bottom: 25px;
     
-    border-radius: 20px; /* Semua sudut membulat */
+    border-radius: 20px; 
     
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px 0;
     z-index: 10;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.05); /* Sedikit bayangan agar pop-up */
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05); 
 }
 
 .nav-menu {
@@ -79,11 +76,9 @@ body {
     cursor: pointer;
 }
 
-/* --- KONTEN UTAMA (KANAN) --- */
 .main-content {
-    /* Margin kiri disesuaikan dengan lebar sidebar + jarak sidebar */
     margin-left: 150px; 
-    padding: 40px 60px 40px 40px; /* Padding kanan lebih besar */
+    padding: 40px 60px 40px 40px; 
     width: calc(100% - 150px);
     overflow-y: auto;
     height: 100vh;
@@ -98,7 +93,6 @@ body {
     letter-spacing: 2px;
 }
 
-/* --- HEADER PROFIL --- */
 .profile-header {
     display: flex;
     align-items: center;
@@ -110,8 +104,8 @@ body {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    background-color: #9ECBCB; /* Warna Biru Tosca pudar sesuai gambar */
-    padding: 0; /* Gambar memenuhi lingkaran */
+    background-color: #9ECBCB; 
+    padding: 0; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -150,18 +144,17 @@ body {
     background-color: #F3EFE7;
     border: 3px solid #EBCBC4;
     color: #D58677;
-    display: none; /* Sembunyi default */
+    display: none; 
 }
 
 .edit-btn:hover { background-color: #c07566; }
 .save-btn:hover { background-color: #e0d4c8; }
 
-/* --- INPUT FIELDS (Full Width) --- */
 .info-section {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 100%; /* FULL WIDTH sampai pinggir */
+    width: 100%; 
 }
 
 .info-card {
@@ -171,7 +164,7 @@ body {
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    position: relative; /* Untuk posisi icon mata */
+    position: relative; 
     position: relative; 
     justify-content: center;
 }
@@ -182,7 +175,6 @@ body {
     margin-bottom: 2px;
 }
 
-/* Styling Input agar terlihat seperti teks biasa saat disabled */
 .info-input {
     background: transparent;
     border: none;
@@ -195,26 +187,23 @@ body {
     outline: none;
 }
 
-/* Saat mode edit aktif (enabled) */
 .info-input:enabled {
     border-bottom: 1px solid #D58677;
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Icon Mata Password */
 .password-toggle {
-    position: absolute; /* Posisi mutlak terhadap info-card */
-    right: 20px;        /* Jarak 20px dari kanan */
-    top: 55%;           /* Turunkan sedikit biar sejajar dengan titik-titik password */
-    transform: translateY(-50%); /* Trik centering vertikal */
+    position: absolute; 
+    right: 20px;        
+    top: 55%;           
+    transform: translateY(-50%); 
     cursor: pointer;
     color: #555;
     font-size: 1.2rem;
-    display: none;      /* Default sembunyi */
+    display: none;      
     z-index: 10;
 }
 
-/* Modal Ganti Password */
 .modal {
     display: none;
     position: fixed;
@@ -336,7 +325,6 @@ body {
     background-color: #efe5d0;
 }
 
-/* Alert Notification */
 .alert {
     padding: 12px 15px;
     border-radius: 8px;

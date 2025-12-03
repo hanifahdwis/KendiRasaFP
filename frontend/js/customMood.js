@@ -1,7 +1,5 @@
-// Cek Login
 Auth.requireAuth();
 
-// ========== DOM ELEMENTS ==========
 const moodsContainer = document.getElementById('moodsContainer');
 const emptyState = document.getElementById('emptyState');
 const modalOverlay = document.getElementById('modalOverlay');
@@ -17,12 +15,10 @@ const logoutBtn = document.getElementById('logoutBtn');
 const deleteSection = document.getElementById('deleteSection');
 const btnDeleteModal = document.getElementById('btnDeleteModal');
 
-// ========== STATE ==========
 let allMoods = [];
 let editingMoodId = null;
 let editingMoodName = null;
 
-// ========== INIT: LOAD MOODS ==========
 document.addEventListener('DOMContentLoaded', loadMoods);
 
 async function loadMoods() {
@@ -50,7 +46,6 @@ async function loadMoods() {
     }
 }
 
-// ========== RENDER MOODS (PILLS) ==========
 function renderMoods(moods) {
     moodsContainer.innerHTML = '';
     
@@ -60,7 +55,6 @@ function renderMoods(moods) {
         moodBtn.style.background = mood.color;
         moodBtn.textContent = mood.name;
         
-        // Hanya rasa custom yang bisa diklik untuk edit
         if (!mood.is_default) {
             moodBtn.addEventListener('click', () => openEditModal(mood));
         }
@@ -68,7 +62,6 @@ function renderMoods(moods) {
         moodsContainer.appendChild(moodBtn);
     });
 
-    // Tambah tombol add mood (simbol +)
     const addBtn = document.createElement('button');
     addBtn.className = 'btn-add-mood-pill';
     addBtn.innerHTML = '<i class="fa-solid fa-plus"></i>';
@@ -76,7 +69,6 @@ function renderMoods(moods) {
     moodsContainer.appendChild(addBtn);
 }
 
-// ========== MODAL FUNCTIONS ==========
 function openAddModal() {
     editingMoodId = null;
     editingMoodName = null;
@@ -115,44 +107,36 @@ modalOverlay.addEventListener('click', (e) => {
     if (e.target === modalOverlay) closeModal();
 });
 
-// ========== COLOR INPUT VALIDATION ==========
 colorCode.addEventListener('input', (e) => {
     let value = e.target.value;
     
-    // Auto-add # jika belum ada
     if (!value.startsWith('#')) {
         value = '#' + value;
     }
     
-    // Validasi hex color
     if (/^#[0-9A-Fa-f]{0,6}$/.test(value)) {
         e.target.value = value.toUpperCase();
     } else {
-        // Kembalikan ke nilai sebelumnya
         e.target.value = e.target.value.slice(0, -1);
     }
 });
 
-// ========== PRESET COLORS ==========
 presetColors.forEach(btn => {
     btn.addEventListener('click', () => {
         const color = btn.dataset.color;
         colorCode.value = color;
         
-        // Visual feedback
         presetColors.forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
     });
 });
 
-// ========== FORM SUBMIT ==========
 moodForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const name = moodName.value.trim();
     const color = colorCode.value;
     
-    // Validasi
     if (!name || name.length < 2) {
         return;
     }
@@ -161,7 +145,6 @@ moodForm.addEventListener('submit', async (e) => {
         return;
     }
     
-    // Loading state
     const originalText = btnSave.innerHTML;
     btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
     btnSave.disabled = true;
@@ -170,10 +153,8 @@ moodForm.addEventListener('submit', async (e) => {
         let result;
         
         if (editingMoodId) {
-            // UPDATE
             result = await API.updateCustomMood(editingMoodId, name, color);
         } else {
-            // CREATE
             result = await API.createCustomMood(name, color);
         }
         
@@ -189,7 +170,6 @@ moodForm.addEventListener('submit', async (e) => {
     }
 });
 
-// ========== DELETE MOOD ==========
 btnDeleteModal.addEventListener('click', async () => {
     if (!editingMoodId) return;
     
@@ -205,7 +185,6 @@ btnDeleteModal.addEventListener('click', async () => {
     }
 });
 
-// ========== UI HELPERS ==========
 function showLoading() {
     moodsContainer.innerHTML = '<div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i><p>Memuat data rasa...</p></div>';
 }
@@ -215,7 +194,6 @@ function hideLoading() {
     if (loadingState) loadingState.remove();
 }
 
-// ========== LOGOUT ==========
 logoutBtn.addEventListener('click', () => {
     if (confirm('Yakin ingin logout?')) Auth.logout();
 });

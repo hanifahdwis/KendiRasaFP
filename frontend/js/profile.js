@@ -1,13 +1,10 @@
-// Cek Login
 Auth.requireAuth();
 
-console.log('Profile.js dimuat'); // DEBUG
+console.log('Profile.js dimuat'); 
 
-// --- 1. READ: Load Data Profil ---
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('DOMContentLoaded triggered'); // DEBUG
+    console.log('DOMContentLoaded triggered'); 
     
-    // Elemen DOM
     const displayName = document.getElementById('displayName');
     const usernameInput = document.getElementById('usernameInput');
     const passwordInput = document.getElementById('passwordInput');
@@ -18,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const logoutBtn = document.getElementById('logoutBtn');
     const deleteAccountBtn = document.getElementById('deleteAccountBtn');
 
-    // Modal Elements
     const changePasswordModal = document.getElementById('changePasswordModal');
     const closeModal = document.getElementById('closeModal');
     const cancelBtn = document.getElementById('cancelBtn');
@@ -28,9 +24,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('Element check:', {
         passwordInput,
         changePasswordModal
-    }); // DEBUG
+    }); 
 
-    // Load Profile
     try {
         const result = await API.getProfile();
         
@@ -64,7 +59,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         displayName.style.color = "red";
     }
 
-    // --- 2. EDIT MODE TOGGLE ---
     editBtn.addEventListener('click', () => {
         editBtn.style.display = 'none';
         saveBtn.style.display = 'inline-flex';
@@ -73,7 +67,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         usernameInput.style.backgroundColor = "rgba(255,255,255,0.8)"; 
     });
 
-    // --- 3. TOGGLE PASSWORD (field disabled) ---
     togglePasswordBtn?.addEventListener('click', () => {
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
@@ -85,7 +78,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // --- 4. UPDATE PROFILE ---
     saveBtn.addEventListener('click', async () => {
         const newUsername = usernameInput.value.trim();
         const currentName = displayName.innerText; 
@@ -117,16 +109,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // --- 5. MODAL GANTI PASSWORD ---
-    
-    // Buka modal saat klik field password
     passwordInput.addEventListener('click', () => {
-        console.log('Password field DIKLIK!'); // DEBUG
+        console.log('Password field DIKLIK!'); 
         changePasswordModal.style.display = 'block';
-        console.log('Modal display:', changePasswordModal.style.display); // DEBUG
+        console.log('Modal display:', changePasswordModal.style.display); 
     });
 
-    // Close modal
     closeModal.addEventListener('click', () => {
         changePasswordModal.style.display = 'none';
         changePasswordForm.reset();
@@ -139,7 +127,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         passwordMessage.style.display = 'none';
     });
 
-    // Close saat klik di luar modal
     window.addEventListener('click', (e) => {
         if (e.target === changePasswordModal) {
             changePasswordModal.style.display = 'none';
@@ -148,7 +135,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Toggle password visibility di modal
     document.querySelectorAll('.password-toggle-modal').forEach(toggle => {
         toggle.addEventListener('click', function() {
             const input = this.previousElementSibling;
@@ -161,7 +147,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // Submit form ganti password
     changePasswordForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -169,7 +154,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const newPassword = document.getElementById('newPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
         
-        // Validasi frontend
         if (newPassword.length < 6) {
             showMessage('❌ Password baru minimal 6 karakter!', 'error');
             return;
@@ -180,7 +164,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
         
-        // Disable submit button
         const submitBtn = changePasswordForm.querySelector('.btn-submit');
         const originalText = submitBtn.textContent;
         submitBtn.disabled = true;
@@ -210,7 +193,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Helper function
     function showMessage(message, type) {
         passwordMessage.textContent = message;
         passwordMessage.className = `alert alert-${type}`;
@@ -221,7 +203,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, 5000);
     }
 
-    // --- 6. DELETE AKUN ---
     deleteAccountBtn.addEventListener('click', async () => {
         const confirmation = prompt('Ketik "HAPUS" untuk menghapus akun (tidak bisa dibatalkan):');
         
@@ -237,7 +218,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // --- 7. LOGOUT ---
     logoutBtn.addEventListener('click', () => {
         if(confirm("Yakin ingin logout?")) {
             Auth.logout();

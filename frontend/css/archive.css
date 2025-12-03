@@ -14,7 +14,6 @@ body {
     overflow: hidden;
 }
 
-/* ========== LAYOUT ========== */
 .dashboard-container {
     display: flex;
     width: 100%;
@@ -22,7 +21,6 @@ body {
     position: relative;
 }
 
-/* ========== SIDEBAR ========== */
 .sidebar {
     width: 100px;
     background-color: #E6D2CA;
@@ -104,7 +102,6 @@ body {
     letter-spacing: 2px;
 }
 
-/* ========== FILTER BUTTONS ========== */
 .filter-container {
     display: flex;
     gap: 12px;
@@ -146,7 +143,6 @@ body {
     display: inline-block;
 }
 
-/* ========== JOURNAL GRID ========== */
 .journal-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -161,7 +157,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     cursor: pointer;
     transition: all 0.3s;
-    /* DIHAPUS: border-left: 5px solid; */
     position: relative;
     overflow: hidden;
 }
@@ -220,7 +215,6 @@ body {
     background: linear-gradient(to right, transparent, white 50%);
 }
 
-/* ========== LOADING & EMPTY STATE ========== */
 .loading-state,
 .empty-state {
     text-align: center;
@@ -240,7 +234,6 @@ body {
     font-size: 1.2rem;
 }
 
-/* ========== POPUP ========== */
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -328,7 +321,6 @@ body {
     color: #999;
 }
 
-/* ========== MODE VIEW ========== */
 .journal-content-display {
     background: white;
     padding: 20px;
@@ -380,7 +372,6 @@ body {
     background: #c92a35;
 }
 
-/* ========== MODE EDIT ========== */
 .emotion-selector {
     margin-bottom: 20px;
 }
@@ -486,7 +477,6 @@ body {
     cursor: not-allowed;
 }
 
-/* ========== SCROLLBAR ========== */
 .main-content::-webkit-scrollbar {
     width: 8px;
 }
