@@ -35,8 +35,8 @@ function createTables() {
       name TEXT NOT NULL,
       color TEXT NOT NULL,
       icon TEXT,
-      user_id INTEGER, -- Tambahan: Siapa yang bikin (NULL kalau default)
-      is_default BOOLEAN DEFAULT 0, -- Tambahan: Penanda rasa bawaan
+      user_id INTEGER, 
+      is_default BOOLEAN DEFAULT 0, rasa bawaan
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )

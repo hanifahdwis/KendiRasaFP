@@ -210,10 +210,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const result = await API.deleteAccount();
             
             if (result.success) {
-                alert('✅ Akun berhasil dihapus');
+                alert('Akun berhasil dihapus');
                 Auth.logout();
             } else {
-                alert('❌ Gagal menghapus akun: ' + result.message);
+                alert('Gagal menghapus akun: ' + result.message);
             }
         }
     });
