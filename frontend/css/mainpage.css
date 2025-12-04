@@ -163,8 +163,11 @@ body {
     z-index: 20; 
 }
 .emotion-btn {
-    display: flex; align-items: center; gap: 15px;
-    background: transparent; border: none; cursor: pointer; transition: transform 0.2s;
+    display: flex; 
+    align-items: center; 
+    gap: 15px;
+    background: transparent; 
+    border: none; cursor: pointer; transition: transform 0.2s;
 }
 .emotion-btn:hover { transform: translateX(5px); }
 .emotion-circle { width: 45px; height: 45px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
