@@ -1,31 +1,26 @@
-// frontend/js/mainpage.js - FIXED VERSION
 
-// 1. Cek Login
 if (typeof Auth !== 'undefined') {
     Auth.requireAuth();
 }
 
-// 2. DOM ELEMENTS
 const ballContainer = document.getElementById('ballContainer');
 const popupOverlay = document.getElementById('popupOverlay');
 const popupEmotionCircle = document.getElementById('popupEmotionCircle');
 const popupEmotionText = document.getElementById('popupEmotionText');
 const journalText = document.getElementById('journalText');
 const btnSimpan = document.getElementById('btnSimpan');
-const emotionSection = document.querySelector('.emotion-section'); // Container tombol
+const emotionSection = document.querySelector('.emotion-section');
 const logoutBtn = document.getElementById('logoutBtn');
 const profileIconSidebar = document.querySelector('.profile-icon-sidebar');
 
 let currentSelection = null;
-let allMoods = []; // Simpan semua rasa (default + custom)
+let allMoods = []; 
 
-// 3. INIT: Load Moods & Balls
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadAllMoods(); // Load rasa dulu
-    await loadBalls();    // Baru load bola
+    await loadAllMoods();
+    await loadBalls(); 
 });
 
-// 4. LOAD SEMUA RASA (Default + Custom)
 async function loadAllMoods() {
     try {
         const result = await API.getAllCustomMoods();
@@ -39,9 +34,8 @@ async function loadAllMoods() {
     }
 }
 
-// 5. RENDER TOMBOL EMOSI SECARA DINAMIS
 function renderEmotionButtons(moods) {
-    emotionSection.innerHTML = ''; // Kosongkan dulu
+    emotionSection.innerHTML = '';
     
     moods.forEach(mood => {
         const btn = document.createElement('button');
@@ -55,7 +49,6 @@ function renderEmotionButtons(moods) {
             <span class="emotion-label">${mood.name.toLowerCase()}</span>
         `;
         
-        // Event listener untuk buka popup
         btn.addEventListener('click', () => {
             currentSelection = { 
                 mood_id: mood.id,
@@ -69,8 +62,6 @@ function renderEmotionButtons(moods) {
         emotionSection.appendChild(btn);
     });
 }
-
-// 6. LOAD DATA BOLA dari Backend
 async function loadBalls() {
     try {
         const result = await API.getAllButiran();
@@ -83,7 +74,6 @@ async function loadBalls() {
     }
 }
 
-// 7. KLIK SIMPAN -> Kirim ke Backend
 btnSimpan.addEventListener('click', async () => {
     if (btnSimpan.textContent === 'tutup') {
         closePopup();
@@ -101,7 +91,6 @@ btnSimpan.addEventListener('click', async () => {
     btnSimpan.disabled = true;
 
     try {
-        // STEP A: Simpan Isi Jurnal
         const resJournal = await API.createJournal({
             mood_id: currentSelection.mood_id,
             content: content
@@ -109,8 +98,6 @@ btnSimpan.addEventListener('click', async () => {
 
         if (resJournal.success) {
             const newJournalId = resJournal.data.id;
-
-            // STEP B: Bikin Bola Visual
             const resBall = await API.createButiran(newJournalId, currentSelection.mood_id);
 
             if (resBall.success) {
@@ -139,7 +126,7 @@ btnSimpan.addEventListener('click', async () => {
     }
 });
 
-// 8. RENDER BOLA
+//RENDER BALL
 function renderBall(data) {
     const ball = document.createElement('div');
     ball.className = 'ball';
@@ -153,7 +140,6 @@ function renderBall(data) {
     ballContainer.appendChild(ball);
 }
 
-// 9. HELPER POPUP
 function openPopup(data, isReadOnly) {
     popupEmotionCircle.style.backgroundColor = data.color;
     popupEmotionText.textContent = data.name;
@@ -174,8 +160,6 @@ function closePopup() {
 popupOverlay.addEventListener('click', (e) => {
     if (e.target === popupOverlay) closePopup();
 });
-
-// 10. NAVIGASI LAINNYA
 logoutBtn.addEventListener('click', () => {
     if(confirm("Yakin ingin logout?")) Auth.logout();
 });
