@@ -41,7 +41,7 @@ const MoodModel = {
       JOIN moods m ON kr.mood_id = m.id
       JOIN journals j ON kr.journal_id = j.id
       WHERE kr.user_id = ?
-      ORDER BY kr.created_at DESC
+      ORDER BY kr.created_at ASC
     `;
     
     db.all(query, [userId], (err, rows) => {

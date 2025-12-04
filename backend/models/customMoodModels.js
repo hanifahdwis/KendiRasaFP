@@ -74,7 +74,7 @@ const CustomMoodModel = {
     
     const checkQuery = `
       SELECT * FROM moods 
-      WHERE id = ? AND user_id = ? AND is_default = 0
+      WHERE id = ? AND user_id = ? AND is_default = 1
     `;
     
     db.get(checkQuery, [id, userId], (err, mood) => {

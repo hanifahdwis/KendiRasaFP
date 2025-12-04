@@ -51,13 +51,11 @@ function renderMoods(moods) {
     
     moods.forEach(mood => {
         const moodBtn = document.createElement('button');
-        moodBtn.className = `mood-pill ${mood.is_default ? 'default' : 'custom'}`;
+        moodBtn.className = 'mood-pill custom';
         moodBtn.style.background = mood.color;
         moodBtn.textContent = mood.name;
         
-        if (!mood.is_default) {
-            moodBtn.addEventListener('click', () => openEditModal(mood));
-        }
+        moodBtn.addEventListener('click', () => openEditModal(mood));
         
         moodsContainer.appendChild(moodBtn);
     });
